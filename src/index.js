@@ -7,6 +7,7 @@ import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
 import PostsIndex from './components/items_index';
 
+import firebase from 'firebase';
 import { firebaseConfig } from './config/auth';
 
 
