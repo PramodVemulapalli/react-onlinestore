@@ -1,0 +1,14 @@
+.floating-box {
+    display: inline-block;
+    width: 300px;
+}
+
+/*
+https://stackoverflow.com/questions/11552380/how-to-automatically-crop-and-center-an-image
+*/
+.card-img-top {
+    object-fit: cover;
+    object-position: center;
+    height: 200px;
+    width: 100%;
+}

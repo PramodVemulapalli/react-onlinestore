@@ -36,6 +36,7 @@ export const populateItems = () => {
     console.log(items);
     items.map( (item) => {
       firebase.database().ref(`/items`).push().set(item);
+      return true;
     });
     dispatch({ type: POPULATE_ITEMS, payload: true });
 

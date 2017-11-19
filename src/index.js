@@ -2,10 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
-import PostsIndex from './components/items_index';
+import StorePage from './pages/store_page';
+import WelcomePage from './pages/welcome_page';
+
+
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap-theme.css';
 
 import firebase from 'firebase';
 import { firebaseConfig } from './config/auth';
@@ -21,7 +26,10 @@ ReactDOM.render(
   <Provider store={createStoreWithMiddleware}>
     <BrowserRouter>
       <div>
-        <Route path="/" component={PostsIndex} />
+        <Switch>
+          <Route path="/dishes" component={StorePage} />
+          <Route path="/" component={WelcomePage} />
+        </Switch>
       </div>
     </BrowserRouter>
   </Provider>
