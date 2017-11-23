@@ -5,8 +5,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ReduxThunk from 'redux-thunk';
 import reducers from './reducers';
-import StorePage from './pages/store_page';
-import WelcomePage from './pages/welcome_page';
+import StorePage from './containers/store_page';
+import WelcomePage from './containers/welcome_page';
 
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -21,6 +21,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 const createStoreWithMiddleware = createStore(reducers, {}, applyMiddleware(ReduxThunk));
 firebase.initializeApp(firebaseConfig);
+
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware}>

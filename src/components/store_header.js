@@ -4,6 +4,7 @@ import {Navbar, Nav, NavItem, NavDropdown, MenuItem, } from 'react-bootstrap';
 
 class StoreHeader extends Component {
 
+  // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
   render() {
     return (
       <div>

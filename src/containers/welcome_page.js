@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import _ from 'lodash';
+// import _ from 'lodash';
 import { connect } from 'react-redux';
 import { fetchItems, populateItems } from '../actions';
 import WelcomeHeader from  './../components/welcome_header';
@@ -12,9 +12,13 @@ class WelcomePage extends Component {
   }
 
   renderPosts() {
-    return (
-            <p className="h3">{"Hello"}</p>
-    );
+
+    var rows = [];
+    for (var i=0; i < 250; i++) {
+        rows.push(<li key={i}> {i}  </li>);
+    }
+    return <ul>{rows}</ul>;
+
   }
 
   render() {
@@ -26,6 +30,7 @@ class WelcomePage extends Component {
           <p className="h2" style={{ 'marginTop': '75px'}} >Main Dishes</p>
           <hr />
         </div>
+
 
         <div>
             { this.renderPosts() }
