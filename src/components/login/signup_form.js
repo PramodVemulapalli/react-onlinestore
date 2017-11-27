@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux'
 
-import { loginUser } from '../../actions';
+import { loginUser, emailChanged, phoneChanged, firstnameChanged, lastnameChanged } from '../../actions';
 import validator from 'validator';
 import { connect } from 'react-redux';
 
@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 
 
 
-class EmailLogin extends Component {
+class SignupForm extends Component {
 
   renderTextField(field) {
     const { meta: { touched, error } } = field;
@@ -42,12 +42,12 @@ class EmailLogin extends Component {
 
   onSubmit(values) {
     // this === component
-    const { email, password } = values;
-    this.props.loginUser(values, () => {
-      this.props.changePage('/dishes');
-    });
-    console.log(email);
-    console.log(password);
+    const { email, phone, lastname, firstname } = values;
+    this.props.emailChanged(email);
+    this.props.phoneChanged(phone);
+    this.props.lastnameChanged(lastname);
+    this.props.firstnameChanged(firstname);
+    this.props.setForm('register');
   }
 
   onError(){
@@ -68,20 +68,32 @@ class EmailLogin extends Component {
         { this.onError() }
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3 className="panel-title">Login</h3>
+            <h3 className="panel-title">Sign Up</h3>
           </div>
           <div className="panel-body">
             <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field
-                  name="email"
+                  name="firstname"
                   type="text"
-                  placeholder="Username"
+                  placeholder="First Name"
                   component={this.renderTextField}
                 />
                 <Field
-                  name="password"
-                  type="password"
-                  placeholder="Password"
+                  name="lastname"
+                  type="text"
+                  placeholder="Last Name"
+                  component={this.renderTextField}
+                />
+                <Field
+                  name="email"
+                  type="text"
+                  placeholder="Email"
+                  component={this.renderTextField}
+                />
+                <Field
+                  name="phone"
+                  type="text"
+                  placeholder="Phone"
                   component={this.renderTextField}
                 />
                 <button type="submit" className="btn btn-primary btn-block btn-lg"> Submit </button>
@@ -97,13 +109,22 @@ function validate(values) {
 
   const errors = {};
   const email = values.email ? values.email : '';
-  const password = values.password? values.password: '';
+  const firstname = values.firstname? values.firstname: '';
+  const lastname = values.lastname? values.lastname: '';
+  const phone = values.phone? values.phone: '';
 
-  if (!validator.isEmail(email)){
-    errors.email = "Please enter a valid email address!";
+
+  if (!validator.isAscii(firstname)){
+    errors.firstname = "Please enter a valid first name!";
   }
-  if (!validator.isAscii(password)){
-    errors.password = "Please enter a valid password!";
+  if (!validator.isAscii(lastname)){
+    errors.lastname = "Please enter a valid last name!";
+  }
+  if (!validator.isEmail(email)){
+    errors.email = "Please enter a valid email!";
+  }
+  if (!validator.isMobilePhone(phone, 'en-US')){
+    errors.phone = "Please enter a valid phone!";
   }
 
   // if errors is empty form is fine to submit
@@ -119,14 +140,18 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   loginUser,
+  emailChanged,
+  firstnameChanged,
+  lastnameChanged,
+  phoneChanged,
   changePage: (pagename) => push(pagename)
 }, dispatch)
 
 export default reduxForm({
   validate,
-  form: 'EmailLoginForm'
+  form: 'SignUpForm'
 })(
-  connect(mapStateToProps, mapDispatchToProps)(EmailLogin)
+  connect(mapStateToProps, mapDispatchToProps)(SignupForm)
 );
 
 

@@ -25,15 +25,15 @@ class WelcomePage extends Component {
 
     return (
       <div>
-        <WelcomeHeader />
         <div>
-          <p className="h2" style={{ 'marginTop': '75px'}} >Main Dishes</p>
-          <hr />
-        </div>
-
-
-        <div>
-            { this.renderPosts() }
+          <WelcomeHeader />
+          <div>
+            <p className="h2" style={{ 'marginTop': '75px'}} >Main Dishes</p>
+            <hr />
+          </div>
+          <div>
+              { this.renderPosts() }
+          </div>
         </div>
       </div>
     );

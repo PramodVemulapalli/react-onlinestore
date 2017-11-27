@@ -27,11 +27,12 @@ class FacebookLogin extends Component {
   render() {
     return (
 
-      <div>
+      <div className="col-sm-6 col-sm-offset-3" style={{'textAlign':'center', 'marginTop':'25px'}}>
 
-        <Button bsStyle="link" className="btn-social btn-facebook" onClick={this.login.bind(this)} block>
-          <i className="fa fa-facebook" /> Sign in with Facebook
-        </Button>
+        <div className="btn-group">
+          <a className='btn btn-primary '><h5><i className="fa fa-facebook" ></i></h5></a>
+          <a className='btn btn-primary ' href=''> <h5>Sign in with Facebook </h5></a>
+        </div>
 
       </div>
 

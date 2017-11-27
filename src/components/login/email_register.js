@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { push } from 'react-router-redux';
 import { bindActionCreators } from 'redux'
 
-import { loginUser } from '../../actions';
+import { signupUser } from '../../actions';
 import validator from 'validator';
 import { connect } from 'react-redux';
 
@@ -18,7 +18,28 @@ import { connect } from 'react-redux';
 
 
 
-class EmailLogin extends Component {
+class EmailRegister extends Component {
+
+
+  onSubmit(values) {
+    // this === component
+    const userdata = {
+      email: this.props.authemail,
+      phone: this.props.authphone,
+      firstname: this.props.authfirstname,
+      lastname: this.props.authlastname
+    };
+
+    const finaldata = { ...userdata, ...values };
+    console.log(finaldata);
+
+
+    this.props.signupUser(values, () => {
+      this.props.changePage('/dishes');
+    });
+  
+  }
+
 
   renderTextField(field) {
     const { meta: { touched, error } } = field;
@@ -38,16 +59,6 @@ class EmailLogin extends Component {
         </div>
       </div>
     );
-  }
-
-  onSubmit(values) {
-    // this === component
-    const { email, password } = values;
-    this.props.loginUser(values, () => {
-      this.props.changePage('/dishes');
-    });
-    console.log(email);
-    console.log(password);
   }
 
   onError(){
@@ -75,13 +86,19 @@ class EmailLogin extends Component {
                 <Field
                   name="email"
                   type="text"
-                  placeholder="Username"
+                  placeholder="Email"
                   component={this.renderTextField}
                 />
                 <Field
                   name="password"
                   type="password"
                   placeholder="Password"
+                  component={this.renderTextField}
+                />
+                <Field
+                  name="confirmpassword"
+                  type="password"
+                  placeholder="Confirm Password"
                   component={this.renderTextField}
                 />
                 <button type="submit" className="btn btn-primary btn-block btn-lg"> Submit </button>
@@ -98,12 +115,19 @@ function validate(values) {
   const errors = {};
   const email = values.email ? values.email : '';
   const password = values.password? values.password: '';
+  const confirmpassword = values.confirmpassword? values.confirmpassword: '';
 
   if (!validator.isEmail(email)){
     errors.email = "Please enter a valid email address!";
   }
   if (!validator.isAscii(password)){
     errors.password = "Please enter a valid password!";
+  }
+  if (!validator.isLength(password, {min:6, max: 30})){
+    errors.password = "The password should have atleast 6 characters.";
+  }
+  if ( password != confirmpassword ){
+    errors.confirmpassword = "The password values donot match!";
   }
 
   // if errors is empty form is fine to submit
@@ -112,22 +136,37 @@ function validate(values) {
 
 }
 
+
+// https://github.com/erikras/redux-form/issues/916
+// add initialvalues to the form
 const mapStateToProps = state => ({
   autherror: state.auth.error,
-  authloginstatus: state.auth.loginStatus
+  authloginstatus: state.auth.loginStatus,
+  authemail: state.auth.email,
+  authphone: state.auth.phone,
+  authfirstname: state.auth.firstname,
+  authlastname: state.auth.lastname,
+  initialValues: {
+    email: state.auth.email
+  }
 })
 
+
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loginUser,
+  signupUser,
   changePage: (pagename) => push(pagename)
 }, dispatch)
 
-export default reduxForm({
-  validate,
-  form: 'EmailLoginForm'
-})(
-  connect(mapStateToProps, mapDispatchToProps)(EmailLogin)
-);
+
+// https://github.com/erikras/redux-form/issues/2012
+
+
+let formComponent = reduxForm({
+    form: 'EmailRegisterForm',
+    validate
+})(EmailRegister);
+
+export default connect(mapStateToProps, mapDispatchToProps)(formComponent);
 
 
 

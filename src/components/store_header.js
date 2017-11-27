@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem, } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions';
 
 
 class StoreHeader extends Component {
+
+  // https://stackoverflow.com/questions/39858754/how-can-i-open-a-modal-from-a-navbar-with-react-bootstrap
+  handleSelect = (selectedKey) => {
+    console.log(selectedKey);
+    if (selectedKey === 5) {
+      this.props.logoutUser();
+    }
+  }
+
 
   // https://github.com/ReactTraining/react-router/issues/83#issuecomment-214794477
   render() {
     return (
       <div>
-        <Navbar collapseOnSelect fixedTop={true} >
+        <Navbar collapseOnSelect fixedTop={true} onSelect={this.handleSelect} >
           <Navbar.Header>
             <Navbar.Brand>
               <a href="#">Hi   </a>
@@ -29,8 +40,8 @@ class StoreHeader extends Component {
               </NavDropdown>
             </Nav>
             <Nav pullRight>
-              <NavItem eventKey={1} href="#">Link Right</NavItem>
-              <NavItem eventKey={2} href="#">Link Right</NavItem>
+              <NavItem eventKey={4} href="#">Link Right</NavItem>
+              <NavItem eventKey={5} href="#">Sign Out</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>
@@ -41,4 +52,4 @@ class StoreHeader extends Component {
 
 }
 
-export default StoreHeader;
+export default connect(null, {logoutUser})(StoreHeader);
