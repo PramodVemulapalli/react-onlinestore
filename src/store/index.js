@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux'
 import thunk from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
+import { createLogger } from 'redux-logger';
 
 
 import reducers from './../reducers';
@@ -25,6 +26,7 @@ if (true){
   if (typeof devToolsExtension === 'function') {
     enhancers.push(devToolsExtension())
   }
+  middleware.push(createLogger());
 }
 
 
