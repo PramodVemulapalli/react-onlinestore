@@ -7,6 +7,8 @@ import createHistory from 'history/createBrowserHistory'
 import reducers from './../reducers';
 import ReduxThunk from 'redux-thunk';
 
+// https://medium.com/@notrab/getting-started-with-create-react-app-redux-react-router-redux-thunk-d6a19259f71f
+
 export const history = createHistory()
 
 const initialState = {}
