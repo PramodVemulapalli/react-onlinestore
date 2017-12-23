@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
+import { bindActionCreators } from 'redux';
+
 import { fetchItems, populateItems, addToCart } from '../actions';
 import StoreHeader from  './../components/store_header';
 import { getCartProducts, getTotal } from '../reducers'
@@ -54,10 +57,14 @@ class StorePage extends Component {
         <div className="subheader">
           <div className="row">
             <div className="col-sm-4">
-              <p className="h2">subheader</p>
+              <p className="h2"> subheader </p>
             </div>
-            <div className="col-sm-1 col-sm-offset-3 text-right">
-              <p className="h2">{this.props.total}</p>
+            <div className="col-sm-3 col-sm-offset-1 text-right">
+              <a onClick={ () => this.props.changePage('/checkout') } >
+                <p className="h2">
+                  Shopping Cart: {this.props.total}
+                </p>
+              </a>
             </div>
           </div>
         </div>
@@ -96,6 +103,11 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect( mapStateToProps , {
-  fetchItems, populateItems, addToCart
-})(StorePage);
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchItems,
+  populateItems,
+  addToCart,
+  changePage: (pagename) => push(pagename)
+}, dispatch)
+
+export default connect( mapStateToProps, mapDispatchToProps)(StorePage);

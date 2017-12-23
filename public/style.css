@@ -23,6 +23,15 @@ https://stackoverflow.com/questions/11552380/how-to-automatically-crop-and-cente
     z-index: 100;
 }
 
+.subheader2 {
+    top: 35px;
+    background-color: #FFF;
+    object-position: center;
+    height: 70px;
+    width: 100%;
+    z-index: 100;
+}
+
 
 .overlayed {
     background: rgba(0, 0, 0, 0.2);

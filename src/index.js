@@ -10,6 +10,7 @@ import mystore, { history } from './store';
 import StorePage from './containers/store_page';
 import WelcomePage from './containers/welcome_page';
 import LoadingPage from './containers/loading_page';
+import CheckoutPage from './containers/checkout_page';
 import requireAuth from './components/require_auth';
 
 
@@ -40,6 +41,7 @@ ReactDOM.render(
         <Switch>
           <Route path="/welcome" component={WelcomePage} />
           <Route path="/dishes" component={requireAuth(StorePage)} />
+          <Route path="/checkout" component={requireAuth(CheckoutPage)} />
         </Switch>
       </div>
     </ConnectedRouter>

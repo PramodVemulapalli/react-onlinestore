@@ -44,12 +44,7 @@ class LoadingPage extends Component {
     console.log(this.props.children);
 
     return (
-      <div>
-        <div>
-          { this.renderLoader() }
-        </div>
-      </div>
-
+      null
     );
 
   }
